@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Strona próba</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+</head>
+
+<body>
+    <main>
+        <header data-thq="thq-navbar" class="navbar-interactive">
+            <div style=" width: 25%; height: 30px; color: rgb(214, 0, 0);"></div>
+            <span class="text" id= "Szukaj przedmiotu">
+                <span> Szukaj przedmiotu:</span>
+            </span>
+            <input class="PoleTekstowe" id="PoleSzukania">
+            <button class="przyciskKoszyk" id="PrzyciskSzukaj" onclick="funkcjaSzukaj(1)">
+                Szukaj
+            </button>
+            <div style=" width: 25%; height: 30px; color: aqua;" id ="Navbardiv"></div>
+            <button class="przyciskKoszyk" id="PrzyciskKoszyk" onclick="pokazKoszyk()"> Koszyk </button>
+            <button id = "Google" class="przyciskKoszyk2"></button>
+        </header>
+        
+        <div  class="navbar2">
+            <span class ="text2"> Szukaj przedmiotu2:</span>
+            <span style="display: flex;">
+                <input class= "PoleTekstowe2" id="PoleSzukania2">
+                <button class="przyciskKoszyk" id="PrzyciskSzukaj2" onclick="funkcjaSzukaj(2)">
+                    Szukaj
+                </button>
+            </span>
+            <button class="przyciskKoszyk3" id="PrzyciskKoszyk3" onclick="pokazKoszyk()"> Koszyk </button>
+            <button id = "Google" class="przyciskKoszyk2"></button>
+
+        </div>
+
+        <div class="EkranGlowny" id=KartyPrzedmiotow>
+            <div class="all-items-cards";> </div>
+        </div>
+        <div class="Koszyk" id="Koszyk2" style="display: none;"> </div>
+        <div id = "podsumowanie1" style="width: 100%;display: none;"  >
+        <div class="PodsumowanieKoszyka" id = "podsumowanie2">
+            <table style="max-width: 80%;">
+            <thead>
+                <tr>
+                    <td align="center" style = "background-color: rgb(235, 235, 235); width : 50%" > <button class="przyciskOproznij" id = "przyciskOproznij" onclick="Oproznij()"> Opróżnij Koszyk </button> </td>
+                    <td align="center" style = "border-top-left-radius: 30px; border-bottom-left-radius: 30px; width : 18%"> <button class="przyciskKup"   id = "przyciskKup" onclick="Kup()"> Kup </button> </td>
+                    <td align="center" class = "Nazwa" style = "width : 12%"> Suma: </td>
+                    <td align="center" class = "Nazwa" id = "sumakoszyka2" style = "width : 20%;"> ${SumaKoszyka.toFixed(2)} </td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+        </div>
+        </div>
+    </main>
+    <script src="src/index.js"> </script>
+</body>
+
+<script type="module">
+
+  
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
+    import { getAuth , GoogleAuthProvider,signInWithPopup } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
+
+  
+    // TODO: Add SDKs for Firebase products that you want to use
+  
+    // https://firebase.google.com/docs/web/setup#available-libraries
+  
+  
+    // Your web app's Firebase configuration
+  
+    const firebaseConfig = 
+    {
+  
+      apiKey: "AIzaSyBlfKcVEet5V7QggFqw95Mql-QGZaGrsGg",
+  
+      authDomain: "magazyn-ba4fa.firebaseapp.com",
+  
+      projectId: "magazyn-ba4fa",
+  
+      storageBucket: "magazyn-ba4fa.appspot.com",
+  
+      messagingSenderId: "662421234384",
+  
+      appId: "1:662421234384:web:484755621bbe5d68abf4d5"
+  
+    };
+  
+  
+    // Initialize Firebase
+  
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const provider = new GoogleAuthProvider(app);
+
+    Google.addEventListener('click',(e) => 
+    {
+
+       signInWithPopup(auth, provider)
+       .then((result) => 
+       {
+       const credential = GoogleAuthProvider.credentialFromResult(result);
+       const token = credential.accessToken;
+       const user = result.user;
+       alert(user.displayName)
+       }).catch((error) => 
+       {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            const email = error.customData.email;
+            const credential = GoogleAuthProvider.credentialFromError(error);
+            alert(errorMessage)
+        });
+  });
+  </script>
+
+<div style="max-width: 80%;"></div>
+</html>
